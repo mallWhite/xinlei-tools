@@ -151,7 +151,32 @@ input, textarea { font-family: inherit; font-size: inherit; }
 .product-desc { font-size: 0.9375rem; color: var(--gray-600); margin-bottom: var(--space-md); line-height: 1.6; }
 .product-specs { display: flex; flex-direction: column; gap: 0.25rem; padding-top: var(--space-sm); border-top: 1px solid var(--gray-200); }
 .product-specs span { font-size: 0.8125rem; color: var(--gray-500); }
+.product-link { display: inline-block; margin-top: var(--space-sm); font-size: 0.875rem; font-weight: 600; color: var(--accent); }
+.product-card:hover .product-link { color: var(--accent-dark); }
 .products-cta { text-align: center; margin-top: var(--space-xl); }
+
+/* 视频展示 */
+.video-section { background: var(--bg-dark); padding: var(--space-3xl) 0; position: relative; overflow: hidden; }
+.video-section::before { content: ''; position: absolute; top: -50%; right: -10%; width: 400px; height: 400px; background: radial-gradient(circle, rgba(237,137,54,0.08) 0%, transparent 70%); border-radius: 50%; }
+.video-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: var(--space-2xl); align-items: center; }
+.video-player { position: relative; border-radius: var(--radius-lg); overflow: hidden; background: var(--gray-900); aspect-ratio: 16/9; }
+.video-player video { width: 100%; height: 100%; object-fit: cover; }
+.video-placeholder { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%); cursor: pointer; transition: var(--transition); }
+.video-placeholder:hover { background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%); }
+.play-btn { width: 80px; height: 80px; background: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; box-shadow: 0 0 40px rgba(237,137,54,0.4); transition: var(--transition); }
+.play-btn svg { width: 32px; height: 32px; color: var(--white); margin-left: 4px; }
+.video-placeholder:hover .play-btn { transform: scale(1.1); box-shadow: 0 0 60px rgba(237,137,54,0.6); }
+.video-placeholder-text { color: var(--gray-400); font-size: 0.9375rem; }
+.video-list { display: flex; flex-direction: column; gap: 1rem; }
+.video-item { display: flex; gap: 1rem; padding: 1rem; background: rgba(255,255,255,0.05); border-radius: var(--radius-md); border: 1px solid rgba(255,255,255,0.1); cursor: pointer; transition: var(--transition); }
+.video-item:hover { background: rgba(255,255,255,0.1); border-color: var(--accent); }
+.video-item.active { background: rgba(237,137,54,0.1); border-color: var(--accent); }
+.video-item-thumb { width: 100px; height: 64px; border-radius: var(--radius-sm); background: var(--gray-800); flex-shrink: 0; display: flex; align-items: center; justify-content: center; position: relative; }
+.video-item-thumb svg { width: 24px; height: 24px; color: var(--accent); }
+.video-item-info { flex: 1; }
+.video-item-title { font-size: 0.9375rem; font-weight: 600; color: var(--white); margin-bottom: 0.25rem; }
+.video-item-desc { font-size: 0.8125rem; color: var(--gray-500); }
+.video-item-duration { font-size: 0.75rem; color: var(--gray-500); margin-top: 0.25rem; }
 
 /* 关于 */
 .about-section { background: var(--white); }
@@ -232,6 +257,7 @@ a.contact-value:hover { color: var(--accent); }
     .advantages-grid { grid-template-columns: repeat(2, 1fr); }
     .applications-grid { grid-template-columns: repeat(3, 1fr); }
     .footer-grid { grid-template-columns: repeat(2, 1fr); }
+    .video-grid { grid-template-columns: 1fr; }
 }
 @media (max-width: 768px) {
     :root { --space-3xl: 4rem; }
@@ -381,7 +407,7 @@ a.contact-value:hover { color: var(--accent); }
                 <p class="section-desc">多规格磨轮产品，满足不同工业打磨需求</p>
             </div>
             <div class="products-grid">
-                <div class="product-card">
+                <a href="product1.html" class="product-card">
                     <div class="product-icon">
                         <svg viewBox="0 0 60 60" fill="none">
                             <circle cx="30" cy="30" r="25" stroke="currentColor" stroke-width="2"/>
@@ -395,8 +421,9 @@ a.contact-value:hover { color: var(--accent); }
                         <span>外径: 100-400mm</span>
                         <span>厚度: 1.0-3.0mm</span>
                     </div>
-                </div>
-                <div class="product-card">
+                    <span class="product-link">了解详情 →</span>
+                </a>
+                <a href="product2.html" class="product-card">
                     <div class="product-icon">
                         <svg viewBox="0 0 60 60" fill="none">
                             <circle cx="30" cy="30" r="25" stroke="currentColor" stroke-width="2"/>
@@ -410,8 +437,9 @@ a.contact-value:hover { color: var(--accent); }
                         <span>粒度: 24-120#</span>
                         <span>规格: 4-7寸</span>
                     </div>
-                </div>
-                <div class="product-card">
+                    <span class="product-link">了解详情 →</span>
+                </a>
+                <a href="product3.html" class="product-card">
                     <div class="product-icon">
                         <svg viewBox="0 0 60 60" fill="none">
                             <circle cx="30" cy="30" r="25" stroke="currentColor" stroke-width="2"/>
@@ -425,8 +453,9 @@ a.contact-value:hover { color: var(--accent); }
                         <span>材质: 金刚石</span>
                         <span>规格: 定制</span>
                     </div>
-                </div>
-                <div class="product-card">
+                    <span class="product-link">了解详情 →</span>
+                </a>
+                <a href="product4.html" class="product-card">
                     <div class="product-icon">
                         <svg viewBox="0 0 60 60" fill="none">
                             <ellipse cx="30" cy="30" rx="20" ry="25" stroke="currentColor" stroke-width="2"/>
@@ -440,10 +469,78 @@ a.contact-value:hover { color: var(--accent); }
                         <span>规格: 100-300mm</span>
                         <span>安全系数: ≥7x</span>
                     </div>
-                </div>
+                    <span class="product-link">了解详情 →</span>
+                </a>
             </div>
             <div class="products-cta">
                 <a href="#contact" class="btn btn-outline">获取详细产品资料</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 视频展示 -->
+    <section class="video-section">
+        <div class="container">
+            <div class="section-header section-header-light">
+                <span class="section-tag">VIDEO SHOWCASE</span>
+                <h2 class="section-title">实拍展示</h2>
+                <p class="section-desc">看看商家们如何使用鑫磊磨轮，感受真实的打磨效果</p>
+            </div>
+            <div class="video-grid">
+                <div class="video-player" id="videoPlayer">
+                    <video id="mainVideo" controls preload="none" poster="">
+                        <source src="" type="video/mp4">
+                        您的浏览器不支持视频播放
+                    </video>
+                    <div class="video-placeholder" id="videoPlaceholder" onclick="playVideo(0)">
+                        <div class="play-btn">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                        </div>
+                        <span class="video-placeholder-text">点击播放视频</span>
+                    </div>
+                </div>
+                <div class="video-list" id="videoList">
+                    <div class="video-item active" onclick="playVideo(0)">
+                        <div class="video-item-thumb">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                        </div>
+                        <div class="video-item-info">
+                            <div class="video-item-title">不锈钢管材切割实测</div>
+                            <div class="video-item-desc">树脂切割片 125mm 切割304不锈钢管</div>
+                            <div class="video-item-duration">02:35</div>
+                        </div>
+                    </div>
+                    <div class="video-item" onclick="playVideo(1)">
+                        <div class="video-item-thumb">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                        </div>
+                        <div class="video-item-info">
+                            <div class="video-item-title">钢结构焊缝打磨演示</div>
+                            <div class="video-item-desc">纤维增强砂轮 180mm 焊缝打磨</div>
+                            <div class="video-item-duration">03:12</div>
+                        </div>
+                    </div>
+                    <div class="video-item" onclick="playVideo(2)">
+                        <div class="video-item-thumb">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                        </div>
+                        <div class="video-item-info">
+                            <div class="video-item-title">大理石精磨抛光</div>
+                            <div class="video-item-desc">金刚石磨轮 石材精磨对比</div>
+                            <div class="video-item-duration">01:48</div>
+                        </div>
+                    </div>
+                    <div class="video-item" onclick="playVideo(3)">
+                        <div class="video-item-thumb">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                        </div>
+                        <div class="video-item-info">
+                            <div class="video-item-title">刀具刃磨全程教学</div>
+                            <div class="video-item-desc">砂轮磨片 硬质合金刀具修磨</div>
+                            <div class="video-item-duration">04:20</div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -729,10 +826,10 @@ a.contact-value:hover { color: var(--accent); }
                 <div class="footer-links">
                     <h4 class="footer-heading">产品分类</h4>
                     <ul class="footer-list">
-                        <li><a href="#">树脂切割片</a></li>
-                        <li><a href="#">砂轮磨片</a></li>
-                        <li><a href="#">金刚石磨轮</a></li>
-                        <li><a href="#">纤维增强砂轮</a></li>
+                        <li><a href="product1.html">树脂切割片</a></li>
+                        <li><a href="product2.html">砂轮磨片</a></li>
+                        <li><a href="product3.html">金刚石磨轮</a></li>
+                        <li><a href="product4.html">纤维增强砂轮</a></li>
                     </ul>
                 </div>
                 <div class="footer-contact">
@@ -868,6 +965,34 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     window.addEventListener('load', function() { document.body.classList.add('loaded'); });
+
+    // Video player
+    const videoData = [
+        { title: '不锈钢管材切割实测', src: '' },
+        { title: '钢结构焊缝打磨演示', src: '' },
+        { title: '大理石精磨抛光', src: '' },
+        { title: '刀具刃磨全程教学', src: '' }
+    ];
+    window.playVideo = function(index) {
+        const placeholder = document.getElementById('videoPlaceholder');
+        const video = document.getElementById('mainVideo');
+        const items = document.querySelectorAll('.video-item');
+        items.forEach((item, i) => {
+            item.classList.toggle('active', i === index);
+        });
+        if (videoData[index].src) {
+            video.src = videoData[index].src;
+            video.load();
+            video.play();
+            placeholder.style.display = 'none';
+        } else {
+            placeholder.querySelector('.video-placeholder-text').textContent = '视频即将上线，敬请期待';
+            placeholder.style.display = 'flex';
+            video.pause();
+            video.removeAttribute('src');
+            video.load();
+        }
+    };
 });
     </script>
 </body>

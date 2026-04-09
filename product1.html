@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>树脂切割片 - 鑫磊工具</title>
+    <meta name="description" content="鑫磊工具树脂切割片，采用优质树脂结合剂，适用于金属、不锈钢快速切割">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚙️</text></svg>">
+    <style>
+:root {
+    --primary: #1a365d;
+    --primary-dark: #0f2744;
+    --primary-light: #2c5282;
+    --accent: #ed8936;
+    --accent-dark: #dd6b20;
+    --accent-light: #f6ad55;
+    --dark: #1a202c;
+    --gray-900: #171923;
+    --gray-800: #2d3748;
+    --gray-700: #4a5568;
+    --gray-600: #718096;
+    --gray-500: #a0aec0;
+    --gray-400: #cbd5e0;
+    --gray-300: #e2e8f0;
+    --gray-200: #edf2f7;
+    --gray-100: #f7fafc;
+    --white: #ffffff;
+    --font-primary: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    --transition: all 0.3s ease;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body { font-family: var(--font-primary); color: var(--gray-800); line-height: 1.6; }
+a { text-decoration: none; color: inherit; transition: var(--transition); }
+ul { list-style: none; }
+img { max-width: 100%; height: auto; }
+.container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+
+/* Header */
+.header { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+.header-inner { display: flex; align-items: center; justify-content: space-between; height: 80px; }
+.logo { display: flex; align-items: center; gap: 1rem; }
+.logo-icon { width: 48px; height: 48px; color: var(--primary); }
+.logo-name { font-size: 1.25rem; font-weight: 700; color: var(--primary); letter-spacing: 1px; }
+.logo-tagline { font-size: 0.75rem; color: var(--gray-600); letter-spacing: 2px; }
+.nav { display: flex; align-items: center; gap: 2rem; }
+.nav-link { font-size: 0.9375rem; font-weight: 500; color: var(--gray-700); position: relative; }
+.nav-link::after { content:''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: var(--accent); transition: var(--transition); }
+.nav-link:hover { color: var(--primary); }
+.nav-link:hover::after { width: 100%; }
+.btn-contact { background: var(--primary); color: var(--white)!important; padding: 0.625rem 1.25rem; border-radius: 4px; }
+.btn-contact::after { display: none; }
+.btn { display: inline-flex; align-items: center; justify-content: center; padding: 0.875rem 1.75rem; font-size: 1rem; font-weight: 600; border-radius: 4px; transition: var(--transition); white-space: nowrap; border: none; cursor: pointer; }
+.btn-primary { background: var(--primary); color: var(--white); }
+.btn-primary:hover { background: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
+.btn-outline { background: transparent; color: var(--primary); border: 2px solid var(--primary); }
+.btn-outline:hover { background: var(--primary); color: var(--white); }
+
+/* Breadcrumb */
+.breadcrumb { padding-top: 100px; background: var(--gray-200); padding-bottom: 1rem; }
+.breadcrumb-list { display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem; color: var(--gray-600); }
+.breadcrumb-list a { color: var(--gray-600); }
+.breadcrumb-list a:hover { color: var(--accent); }
+.breadcrumb-sep { color: var(--gray-400); }
+.breadcrumb-current { color: var(--primary); font-weight: 600; }
+
+/* Product Hero */
+.product-hero { padding: 4rem 0; background: var(--white); }
+.product-hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+
+/* Image Gallery */
+.gallery { position: relative; }
+.gallery-main { width: 100%; aspect-ratio: 1; background: linear-gradient(135deg, var(--gray-200), var(--gray-300)); border-radius: 12px; display: flex; align-items: center; justify-content: center; overflow: hidden; margin-bottom: 1rem; position: relative; }
+.gallery-main svg { width: 60%; height: 60%; color: var(--gray-500); }
+.gallery-badge { position: absolute; top: 1rem; left: 1rem; background: var(--accent); color: var(--white); padding: 0.25rem 0.75rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700; }
+.gallery-thumbs { display: flex; gap: 0.75rem; }
+.gallery-thumb { width: 80px; height: 80px; background: linear-gradient(135deg, var(--gray-200), var(--gray-300)); border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; border: 2px solid transparent; transition: var(--transition); }
+.gallery-thumb:hover, .gallery-thumb.active { border-color: var(--accent); }
+.gallery-thumb svg { width: 40px; height: 40px; color: var(--gray-500); }
+
+/* Product Info */
+.product-info { padding-top: 1rem; }
+.product-tag { display: inline-block; font-size: 0.75rem; font-weight: 600; color: var(--accent); letter-spacing: 2px; margin-bottom: 0.75rem; background: rgba(237,137,54,0.1); padding: 0.25rem 0.75rem; border-radius: 9999px; border: 1px solid rgba(237,137,54,0.3); }
+.product-title { font-size: 2.5rem; font-weight: 800; color: var(--dark); margin-bottom: 1rem; line-height: 1.2; }
+.product-subtitle { font-size: 1.125rem; color: var(--gray-600); margin-bottom: 1.5rem; line-height: 1.6; }
+.product-highlights { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 2rem; }
+.highlight-tag { display: flex; align-items: center; gap: 0.375rem; background: var(--gray-200); padding: 0.375rem 0.875rem; border-radius: 9999px; font-size: 0.8125rem; font-weight: 500; color: var(--gray-700); }
+.highlight-tag svg { width: 16px; height: 16px; color: var(--accent); }
+.product-actions { display: flex; gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap; }
+
+/* Specs Table */
+.specs-section { padding: 4rem 0; background: var(--gray-200); }
+.specs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+.specs-table { width: 100%; border-collapse: collapse; background: var(--white); border-radius: 12px; overflow: hidden; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+.specs-table th, .specs-table td { padding: 1rem 1.25rem; text-align: left; border-bottom: 1px solid var(--gray-200); }
+.specs-table th { background: var(--primary); color: var(--white); font-weight: 600; font-size: 0.9375rem; }
+.specs-table td { font-size: 0.9375rem; color: var(--gray-700); }
+.specs-table tr:hover td { background: var(--gray-100); }
+.specs-table tr:last-child td { border-bottom: none; }
+.specs-note { background: var(--white); padding: 1.5rem; border-radius: 12px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+.specs-note h4 { font-size: 1.125rem; font-weight: 700; color: var(--dark); margin-bottom: 0.75rem; }
+.specs-note p { font-size: 0.9375rem; color: var(--gray-600); line-height: 1.8; }
+.specs-note ul { margin-top: 0.75rem; }
+.specs-note li { font-size: 0.9375rem; color: var(--gray-600); padding: 0.375rem 0; padding-left: 1.5rem; position: relative; }
+.specs-note li::before { content: '✓'; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
+
+/* Applications */
+.apps-section { padding: 4rem 0; background: var(--white); }
+.apps-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+.app-card { text-align: center; padding: 2rem 1rem; background: var(--gray-200); border-radius: 12px; transition: var(--transition); }
+.app-card:hover { transform: translateY(-4px); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); background: var(--white); }
+.app-card-icon { width: 48px; height: 48px; margin: 0 auto 0.75rem; color: var(--primary); }
+.app-card-name { font-size: 0.9375rem; font-weight: 600; color: var(--dark); margin-bottom: 0.375rem; }
+.app-card-desc { font-size: 0.8125rem; color: var(--gray-600); }
+
+/* Related Products */
+.related-section { padding: 4rem 0; background: var(--gray-200); }
+.related-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+.related-card { background: var(--white); padding: 1.5rem; border-radius: 12px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); transition: var(--transition); border: 1px solid var(--gray-300); }
+.related-card:hover { transform: translateY(-4px); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); border-color: var(--accent); }
+.related-card-icon { width: 60px; height: 60px; margin-bottom: 1rem; color: var(--primary); }
+.related-card-name { font-size: 1.125rem; font-weight: 700; color: var(--dark); margin-bottom: 0.5rem; }
+.related-card-desc { font-size: 0.875rem; color: var(--gray-600); margin-bottom: 1rem; }
+.related-card-link { font-size: 0.875rem; font-weight: 600; color: var(--accent); }
+
+/* Footer */
+.footer { background: var(--gray-900); color: var(--gray-400); padding: 3rem 0 1.5rem; }
+.footer-inner { display: flex; justify-content: space-between; align-items: center; padding-bottom: 1.5rem; border-bottom: 1px solid var(--gray-800); margin-bottom: 1.5rem; }
+.footer-logo { display: flex; align-items: center; gap: 0.75rem; color: var(--white); }
+.footer-logo .logo-icon { width: 32px; height: 32px; color: var(--white); }
+.footer-logo span { font-size: 1.125rem; font-weight: 700; }
+.footer-bottom { text-align: center; font-size: 0.8125rem; }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .nav { display: none; }
+    .product-hero-grid { grid-template-columns: 1fr; }
+    .product-title { font-size: 1.875rem; }
+    .specs-grid { grid-template-columns: 1fr; }
+    .apps-grid { grid-template-columns: repeat(2, 1fr); }
+    .related-grid { grid-template-columns: 1fr; }
+    .product-actions { flex-direction: column; }
+    .btn { width: 100%; }
+}
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-inner">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon">
+                        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="20" cy="20" r="18" stroke="currentColor" stroke-width="2"/>
+                            <circle cx="20" cy="20" r="8" stroke="currentColor" stroke-width="2"/>
+                            <path d="M20 4 L20 12 M20 28 L20 36 M4 20 L12 20 M28 20 L36 20" stroke="currentColor" stroke-width="2"/>
+                            <path d="M8.5 8.5 L14 14 M26 26 L31.5 31.5 M8.5 31.5 L14 26 M26 14 L31.5 8.5" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="logo-name">鑫磊工具</div>
+                        <div class="logo-tagline">专业磨轮制造商</div>
+                    </div>
+                </a>
+                <nav class="nav">
+                    <a href="index.html#products" class="nav-link">产品中心</a>
+                    <a href="index.html#about" class="nav-link">关于我们</a>
+                    <a href="index.html#advantages" class="nav-link">优势与服务</a>
+                    <a href="index.html#contact" class="nav-link btn-contact">联系我们</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+        <div class="container">
+            <div class="breadcrumb-list">
+                <a href="index.html">首页</a>
+                <span class="breadcrumb-sep">/</span>
+                <a href="index.html#products">产品中心</a>
+                <span class="breadcrumb-sep">/</span>
+                <span class="breadcrumb-current">树脂切割片</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Hero -->
+    <section class="product-hero">
+        <div class="container">
+            <div class="product-hero-grid">
+                <!-- Image Gallery -->
+                <div class="gallery">
+                    <div class="gallery-main">
+                        <div class="gallery-badge">热销产品</div>
+                        <svg viewBox="0 0 60 60" fill="none">
+                            <circle cx="30" cy="30" r="25" stroke="currentColor" stroke-width="1.5"/>
+                            <circle cx="30" cy="30" r="18" stroke="currentColor" stroke-width="1" stroke-dasharray="3 3"/>
+                            <circle cx="30" cy="30" r="10" stroke="currentColor" stroke-width="1.5"/>
+                            <circle cx="30" cy="30" r="4" fill="currentColor" opacity="0.5"/>
+                            <path d="M30 5 L30 12 M30 48 L30 55 M5 30 L12 30 M48 30 L55 30" stroke="currentColor" stroke-width="1.5"/>
+                        </svg>
+                    </div>
+                    <div class="gallery-thumbs">
+                        <div class="gallery-thumb active">
+                            <svg viewBox="0 0 60 60" fill="none"><circle cx="30" cy="30" r="22" stroke="currentColor" stroke-width="1.5"/><circle cx="30" cy="30" r="8" stroke="currentColor" stroke-width="1"/><circle cx="30" cy="30" r="3" fill="currentColor"/></svg>
+                        </div>
+                        <div class="gallery-thumb">
+                            <svg viewBox="0 0 60 60" fill="none"><circle cx="30" cy="30" r="22" stroke="currentColor" stroke-width="1.5"/><path d="M30 15 L30 25 M30 35 L30 45 M15 30 L25 30 M35 30 L45 30" stroke="currentColor" stroke-width="1"/><circle cx="30" cy="30" r="5" fill="currentColor" opacity="0.3"/></svg>
+                        </div>
+                        <div class="gallery-thumb">
+                            <svg viewBox="0 0 60 60" fill="none"><circle cx="30" cy="30" r="22" stroke="currentColor" stroke-width="1.5"/><circle cx="30" cy="30" r="14" stroke="currentColor" stroke-width="0.5" stroke-dasharray="2 2"/><circle cx="30" cy="30" r="3" fill="currentColor" opacity="0.5"/></svg>
+                        </div>
+                        <div class="gallery-thumb">
+                            <svg viewBox="0 0 60 60" fill="none"><rect x="10" y="25" width="40" height="10" rx="5" stroke="currentColor" stroke-width="1.5"/><circle cx="20" cy="30" r="3" fill="currentColor" opacity="0.3"/><circle cx="40" cy="30" r="3" fill="currentColor" opacity="0.3"/></svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Info -->
+                <div class="product-info">
+                    <span class="product-tag">RESIN CUTTING WHEEL</span>
+                    <h1 class="product-title">树脂切割片</h1>
+                    <p class="product-subtitle">采用优质树脂结合剂与高强度玻璃纤维网增强，专为金属、不锈钢的高效切割而设计。切割速度快、散热性好、使用寿命长，是工业切割的首选。</p>
+                    
+                    <div class="product-highlights">
+                        <span class="highlight-tag">
+                            <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0a8 8 0 110 16A8 8 0 018 0zm3.5 5.5l-4 4-2-2L4 9l3.5 3.5L13 7l-1.5-1.5z"/></svg>
+                            高速切割
+                        </span>
+                        <span class="highlight-tag">
+                            <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0a8 8 0 110 16A8 8 0 018 0zm3.5 5.5l-4 4-2-2L4 9l3.5 3.5L13 7l-1.5-1.5z"/></svg>
+                            不烧伤工件
+                        </span>
+                        <span class="highlight-tag">
+                            <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0a8 8 0 110 16A8 8 0 018 0zm3.5 5.5l-4 4-2-2L4 9l3.5 3.5L13 7l-1.5-1.5z"/></svg>
+                            纤维网增强
+                        </span>
+                        <span class="highlight-tag">
+                            <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0a8 8 0 110 16A8 8 0 018 0zm3.5 5.5l-4 4-2-2L4 9l3.5 3.5L13 7l-1.5-1.5z"/></svg>
+                            安全认证
+                        </span>
+                        <span class="highlight-tag">
+                            <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0a8 8 0 110 16A8 8 0 018 0zm3.5 5.5l-4 4-2-2L4 9l3.5 3.5L13 7l-1.5-1.5z"/></svg>
+                            规格齐全
+                        </span>
+                    </div>
+
+                    <div class="product-actions">
+                        <a href="index.html#contact" class="btn btn-primary">获取报价</a>
+                        <a href="index.html#contact" class="btn btn-outline">索取样品</a>
+                    </div>
+
+                    <div style="background:var(--gray-200); padding:1.25rem; border-radius:8px; font-size:0.875rem; color:var(--gray-600); line-height:1.8;">
+                        <strong style="color:var(--dark);">💡 选购提示：</strong>切割片厚度越薄，切割效率越高但耐用性略降；厚片适合重负荷作业。如需选型建议，请联系我们的技术团队。
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Specs -->
+    <section class="specs-section">
+        <div class="container">
+            <div class="specs-grid">
+                <table class="specs-table">
+                    <thead>
+                        <tr>
+                            <th>参数</th>
+                            <th>规格范围</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>外径</td><td>100mm / 115mm / 125mm / 150mm / 180mm / 230mm / 300mm / 350mm / 400mm</td></tr>
+                        <tr><td>厚度</td><td>1.0mm / 1.2mm / 1.6mm / 2.0mm / 2.5mm / 3.0mm</td></tr>
+                        <tr><td>内孔</td><td>16mm / 20mm / 22.23mm / 25.4mm / 32mm</td></tr>
+                        <tr><td>最高转速</td><td>80m/s（标准型）/ 100m/s（高速型）</td></tr>
+                        <tr><td>结合剂</td><td>酚醛树脂</td></tr>
+                        <tr><td>磨料</td><td>棕刚玉 A / 白刚玉 WA / 锆刚玉 ZA</td></tr>
+                        <tr><td>增强层</td><td>高强度玻璃纤维网（2层）</td></tr>
+                        <tr><td>硬度</td><td>中软 ~ 中硬（可定制）</td></tr>
+                        <tr><td>安全标准</td><td>EN 12413 / OSA 认证</td></tr>
+                    </tbody>
+                </table>
+                <div class="specs-note">
+                    <h4>产品特点</h4>
+                    <p>鑫磊树脂切割片采用进口酚醛树脂结合剂，经高温热压成型，具有以下优势：</p>
+                    <ul>
+                        <li>切割锋利，效率比普通切割片提升20%以上</li>
+                        <li>双层玻纤网增强，安全系数≥7倍，防爆裂</li>
+                        <li>散热快，不烧伤工件表面，切割面光洁</li>
+                        <li>磨料选择灵活，适应碳钢、不锈钢、铸铁等多种材质</li>
+                        <li>支持非标规格定制，最快7天交货</li>
+                        <li>通过欧洲EN 12413安全认证和OSA认证</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Applications -->
+    <section class="apps-section">
+        <div class="container">
+            <div style="text-align:center; margin-bottom:2.5rem;">
+                <span style="font-size:0.875rem; font-weight:600; color:var(--accent); letter-spacing:3px;">APPLICATIONS</span>
+                <h2 style="font-size:2rem; font-weight:800; color:var(--dark); margin-top:0.5rem;">应用场景</h2>
+            </div>
+            <div class="apps-grid">
+                <div class="app-card">
+                    <div class="app-card-icon">
+                        <svg viewBox="0 0 40 40" fill="none"><rect x="5" y="15" width="30" height="20" rx="2" stroke="currentColor" stroke-width="2"/><path d="M10 15 L10 8 L30 8 L30 15" stroke="currentColor" stroke-width="2"/><circle cx="20" cy="25" r="5" stroke="currentColor" stroke-width="2"/></svg>
+                    </div>
+                    <div class="app-card-name">钢结构切割</div>
+                    <div class="app-card-desc">H型钢、角钢、工字钢快速切断</div>
+                </div>
+                <div class="app-card">
+                    <div class="app-card-icon">
+                        <svg viewBox="0 0 40 40" fill="none"><path d="M8 28 L20 10 L32 28 Z" stroke="currentColor" stroke-width="2"/><rect x="15" y="28" width="10" height="6" stroke="currentColor" stroke-width="2"/></svg>
+                    </div>
+                    <div class="app-card-name">不锈钢加工</div>
+                    <div class="app-card-desc">304/316不锈钢管材、板材切割</div>
+                </div>
+                <div class="app-card">
+                    <div class="app-card-icon">
+                        <svg viewBox="0 0 40 40" fill="none"><rect x="8" y="18" width="24" height="16" rx="2" stroke="currentColor" stroke-width="2"/><circle cx="16" cy="12" r="6" stroke="currentColor" stroke-width="2"/><path d="M16 18 L16 24" stroke="currentColor" stroke-width="2"/></svg>
+                    </div>
+                    <div class="app-card-name">汽车配件</div>
+                    <div class="app-card-desc">排气管、车架、钣金件切割</div>
+                </div>
+                <div class="app-card">
+                    <div class="app-card-icon">
+                        <svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="12" stroke="currentColor" stroke-width="2"/><circle cx="20" cy="20" r="4" stroke="currentColor" stroke-width="2"/><path d="M20 4 L20 8 M20 32 L20 36" stroke="currentColor" stroke-width="2"/></svg>
+                    </div>
+                    <div class="app-card-name">机械加工</div>
+                    <div class="app-card-desc">圆钢、方钢、钢筋下料切割</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Related Products -->
+    <section class="related-section">
+        <div class="container">
+            <div style="text-align:center; margin-bottom:2.5rem;">
+                <span style="font-size:0.875rem; font-weight:600; color:var(--accent); letter-spacing:3px;">RELATED PRODUCTS</span>
+                <h2 style="font-size:2rem; font-weight:800; color:var(--dark); margin-top:0.5rem;">相关产品</h2>
+            </div>
+            <div class="related-grid">
+                <a href="product2.html" class="related-card">
+                    <div class="related-card-icon">
+                        <svg viewBox="0 0 60 60" fill="none"><circle cx="30" cy="30" r="25" stroke="currentColor" stroke-width="2"/><circle cx="30" cy="30" r="15" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 4"/><circle cx="30" cy="30" r="5" fill="currentColor"/></svg>
+                    </div>
+                    <div class="related-card-name">砂轮磨片</div>
+                    <div class="related-card-desc">氧化铝/碳化硅材质，适用于金属表面粗磨、精磨、去毛刺</div>
+                    <span class="related-card-link">查看详情 →</span>
+                </a>
+                <a href="product3.html" class="related-card">
+                    <div class="related-card-icon">
+                        <svg viewBox="0 0 60 60" fill="none"><circle cx="30" cy="30" r="25" stroke="currentColor" stroke-width="2"/><path d="M30 10 L30 25 M30 35 L30 50 M10 30 L25 30 M35 30 L50 30" stroke="currentColor" stroke-width="2"/><circle cx="30" cy="30" r="3" fill="currentColor"/></svg>
+                    </div>
+                    <div class="related-card-name">金刚石磨轮</div>
+                    <div class="related-card-desc">金刚石材质，适用于硬质合金、石材、玻璃等高硬度材料打磨</div>
+                    <span class="related-card-link">查看详情 →</span>
+                </a>
+                <a href="product4.html" class="related-card">
+                    <div class="related-card-icon">
+                        <svg viewBox="0 0 60 60" fill="none"><ellipse cx="30" cy="30" rx="20" ry="25" stroke="currentColor" stroke-width="2"/><ellipse cx="30" cy="30" rx="10" ry="15" stroke="currentColor" stroke-width="1.5"/><circle cx="30" cy="30" r="3" fill="currentColor"/></svg>
+                    </div>
+                    <div class="related-card-name">纤维增强砂轮</div>
+                    <div class="related-card-desc">双层纤维网增强，安全系数高，适用于重型磨削和切割作业</div>
+                    <span class="related-card-link">查看详情 →</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-inner">
+                <a href="index.html" class="footer-logo">
+                    <div class="logo-icon">
+                        <svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="18" stroke="currentColor" stroke-width="2"/><circle cx="20" cy="20" r="8" stroke="currentColor" stroke-width="2"/><path d="M20 4 L20 12 M20 28 L20 36 M4 20 L12 20 M28 20 L36 20" stroke="currentColor" stroke-width="2"/></svg>
+                    </div>
+                    <span>鑫磊工具</span>
+                </a>
+                <div style="font-size:0.875rem;">400-888-8888 | info@xinleigongju.com</div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 鑫磊工具. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
