@@ -205,13 +205,31 @@ input, textarea { font-family: inherit; font-size: inherit; }
 .advantage-title { font-size: 1.25rem; font-weight: 700; color: var(--white); margin-bottom: var(--space-sm); }
 .advantage-desc { font-size: 0.9375rem; color: var(--gray-400); line-height: 1.6; }
 
-/* 应用领域 */
-.applications-section { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); padding: var(--space-3xl) 0; }
-.applications-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: var(--space-lg); }
-.application-item { text-align: center; }
-.app-icon { width: 64px; height: 64px; margin: 0 auto var(--space-sm); padding: var(--space-sm); background: rgba(255, 255, 255, 0.1); border-radius: var(--radius-md); color: var(--white); transition: var(--transition); }
-.application-item:hover .app-icon { background: var(--accent); transform: scale(1.1); }
-.app-name { font-size: 0.875rem; font-weight: 500; color: var(--white); }
+/* 应用领域 - 横向滚动 */
+.applications-section { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); padding: var(--space-3xl) 0; overflow: hidden; }
+.applications-wrapper { position: relative; }
+.applications-scroll { display: flex; gap: 1.25rem; overflow-x: auto; padding: 1rem 1.5rem 2rem; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; scrollbar-width: none; cursor: grab; user-select: none; }
+.applications-scroll::-webkit-scrollbar { display: none; }
+.applications-scroll.grabbing { cursor: grabbing; scroll-behavior: auto; }
+.app-card-scene { flex: 0 0 280px; height: 360px; border-radius: 16px; overflow: hidden; position: relative; background: var(--gray-900); box-shadow: 0 4px 20px rgba(0,0,0,0.3); transition: transform 0.3s ease, box-shadow 0.3s ease; }
+.app-card-scene:hover { transform: translateY(-8px) scale(1.02); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+.app-card-scene-img { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+.app-card-scene-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 40%, transparent 100%); transition: background 0.3s; }
+.app-card-scene:hover .app-card-scene-overlay { background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.1) 100%); }
+.app-card-scene-content { position: absolute; bottom: 0; left: 0; right: 0; padding: 1.5rem; }
+.app-card-scene-tag { display: inline-block; font-size: 0.625rem; font-weight: 700; color: var(--accent); letter-spacing: 3px; margin-bottom: 0.5rem; text-transform: uppercase; }
+.app-card-scene-name { font-size: 1.25rem; font-weight: 700; color: var(--white); margin-bottom: 0.375rem; }
+.app-card-scene-desc { font-size: 0.8125rem; color: rgba(255,255,255,0.7); line-height: 1.5; }
+.app-card-scene-dot { position: absolute; top: 1.5rem; right: 1.5rem; width: 8px; height: 8px; background: var(--accent); border-radius: 50%; opacity: 0; transition: opacity 0.3s; }
+.app-card-scene:hover .app-card-scene-dot { opacity: 1; }
+.scroll-btn { position: absolute; top: 50%; transform: translateY(-50%); width: 44px; height: 44px; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--white); cursor: pointer; z-index: 5; transition: var(--transition); backdrop-filter: blur(4px); opacity: 0; pointer-events: none; }
+.applications-wrapper:hover .scroll-btn { opacity: 1; pointer-events: auto; }
+.scroll-btn:hover { background: var(--accent); border-color: var(--accent); }
+.scroll-btn-left { left: 0.5rem; }
+.scroll-btn-right { right: 0.5rem; }
+.scroll-dots { display: flex; justify-content: center; gap: 0.5rem; margin-top: 0.5rem; }
+.scroll-dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,0.3); transition: all 0.3s; cursor: pointer; }
+.scroll-dot.active { width: 20px; border-radius: 3px; background: var(--accent); }
 
 /* 联系 */
 .contact-section { background: var(--bg-secondary); }
@@ -255,7 +273,6 @@ a.contact-value:hover { color: var(--accent); }
     .hero-title { font-size: 2.75rem; }
     .products-grid { grid-template-columns: repeat(2, 1fr); }
     .advantages-grid { grid-template-columns: repeat(2, 1fr); }
-    .applications-grid { grid-template-columns: repeat(3, 1fr); }
     .footer-grid { grid-template-columns: repeat(2, 1fr); }
     .video-grid { grid-template-columns: 1fr; }
 }
@@ -275,7 +292,6 @@ a.contact-value:hover { color: var(--accent); }
     .about-grid { grid-template-columns: 1fr; }
     .about-visual { order: -1; }
     .advantages-grid { grid-template-columns: 1fr; }
-    .applications-grid { grid-template-columns: repeat(3, 1fr); }
     .contact-grid { grid-template-columns: 1fr; }
     .contact-items { grid-template-columns: 1fr; }
     .footer-grid { grid-template-columns: 1fr; text-align: center; }
@@ -285,7 +301,6 @@ a.contact-value:hover { color: var(--accent); }
     .hero-title { font-size: 1.875rem; }
     .hero-stats { flex-direction: column; gap: var(--space-md); }
     .btn { width: 100%; }
-    .applications-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
 /* 动画 */
@@ -642,72 +657,415 @@ a.contact-value:hover { color: var(--accent); }
                 <span class="section-tag">APPLICATIONS</span>
                 <h2 class="section-title">应用领域</h2>
             </div>
-            <div class="applications-grid">
-                <div class="application-item">
-                    <div class="app-icon">
-                        <svg viewBox="0 0 40 40" fill="none">
-                            <rect x="5" y="15" width="30" height="20" rx="2" stroke="currentColor" stroke-width="2"/>
-                            <path d="M10 15 L10 8 L30 8 L30 15" stroke="currentColor" stroke-width="2"/>
-                            <circle cx="20" cy="25" r="5" stroke="currentColor" stroke-width="2"/>
-                        </svg>
+            <div class="applications-wrapper">
+                <button class="scroll-btn scroll-btn-left" onclick="scrollApps(-1)" aria-label="向左滚动">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+                </button>
+                <div class="applications-scroll" id="appsScroll">
+                    <!-- 钢结构 -->
+                    <div class="app-card-scene">
+                        <div class="app-card-scene-img">
+                            <svg viewBox="0 0 280 360" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%">
+                                <defs>
+                                    <linearGradient id="sg1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1a3a5c"/><stop offset="100%" stop-color="#0f2744"/></linearGradient>
+                                    <linearGradient id="sg2" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#2c5282" stop-opacity="0.5"/><stop offset="100%" stop-color="#1a365d" stop-opacity="0"/></linearGradient>
+                                </defs>
+                                <rect width="280" height="360" fill="url(#sg1)"/>
+                                <!-- 天空背景 -->
+                                <rect x="0" y="0" width="280" height="160" fill="#1a4a7a" opacity="0.4"/>
+                                <circle cx="220" cy="50" r="30" fill="#f6ad55" opacity="0.3"/>
+                                <!-- 建筑骨架 -->
+                                <rect x="30" y="80" width="8" height="280" fill="#4a5568" opacity="0.8"/>
+                                <rect x="100" y="60" width="8" height="300" fill="#4a5568" opacity="0.8"/>
+                                <rect x="170" y="90" width="8" height="270" fill="#4a5568" opacity="0.8"/>
+                                <rect x="240" y="70" width="8" height="290" fill="#4a5568" opacity="0.8"/>
+                                <!-- 横梁 -->
+                                <rect x="30" y="80" width="218" height="6" fill="#718096" opacity="0.7"/>
+                                <rect x="30" y="140" width="218" height="5" fill="#718096" opacity="0.6"/>
+                                <rect x="30" y="200" width="218" height="5" fill="#718096" opacity="0.5"/>
+                                <!-- 斜撑 -->
+                                <path d="M38 140 L100 80" stroke="#718096" stroke-width="3" opacity="0.6"/>
+                                <path d="M38 200 L100 140" stroke="#718096" stroke-width="3" opacity="0.5"/>
+                                <path d="M108 140 L170 90" stroke="#718096" stroke-width="3" opacity="0.6"/>
+                                <!-- 地面 -->
+                                <rect x="0" y="340" width="280" height="20" fill="#2d3748" opacity="0.8"/>
+                                <!-- 焊接火花 -->
+                                <circle cx="100" cy="130" r="3" fill="#ed8936"/>
+                                <circle cx="106" cy="118" r="2" fill="#f6ad55"/>
+                                <circle cx="94" cy="122" r="1.5" fill="#fbd38d"/>
+                                <circle cx="110" cy="125" r="1" fill="#ed8936"/>
+                                <circle cx="88" cy="115" r="2" fill="#f6ad55"/>
+                                <!-- 切割光 -->
+                                <path d="M170 200 L180 205 L170 210" stroke="#ed8936" stroke-width="2" opacity="0.8"/>
+                                <rect x="168" y="203" width="4" height="4" fill="#fff" opacity="0.9"/>
+                                <!-- 橙色主题 -->
+                                <rect x="0" y="350" width="280" height="4" fill="#ed8936"/>
+                            </svg>
+                            <div class="app-card-scene-overlay"></div>
+                        </div>
+                        <div class="app-card-scene-dot"></div>
+                        <div class="app-card-scene-content">
+                            <div class="app-card-scene-tag">STEEL STRUCTURE</div>
+                            <div class="app-card-scene-name">钢结构</div>
+                            <div class="app-card-scene-desc">H型钢、角钢、工字钢切割与焊缝打磨</div>
+                        </div>
                     </div>
-                    <span class="app-name">钢结构</span>
-                </div>
-                <div class="application-item">
-                    <div class="app-icon">
-                        <svg viewBox="0 0 40 40" fill="none">
-                            <path d="M8 28 L20 10 L32 28 Z" stroke="currentColor" stroke-width="2"/>
-                            <rect x="15" y="28" width="10" height="6" stroke="currentColor" stroke-width="2"/>
-                            <path d="M20 10 L20 4" stroke="currentColor" stroke-width="2"/>
-                            <circle cx="20" cy="4" r="2" fill="currentColor"/>
-                        </svg>
+                    <!-- 船舶制造 -->
+                    <div class="app-card-scene">
+                        <div class="app-card-scene-img">
+                            <svg viewBox="0 0 280 360" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%">
+                                <defs><linearGradient id="ship1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#0c2d4a"/><stop offset="100%" stop-color="#1a4a7a"/></linearGradient></defs>
+                                <rect width="280" height="360" fill="url(#ship1)"/>
+                                <!-- 天空 -->
+                                <rect x="0" y="0" width="280" height="200" fill="#1a3a5c" opacity="0.5"/>
+                                <circle cx="60" cy="60" r="25" fill="#e2e8f0" opacity="0.15"/>
+                                <circle cx="240" cy="40" r="18" fill="#e2e8f0" opacity="0.1"/>
+                                <!-- 海浪 -->
+                                <path d="M0 280 Q70 260 140 280 Q210 300 280 280 L280 360 L0 360 Z" fill="#0f4c75" opacity="0.8"/>
+                                <path d="M0 295 Q70 275 140 295 Q210 315 280 295 L280 360 L0 360 Z" fill="#0a3655" opacity="0.9"/>
+                                <!-- 船体 -->
+                                <path d="M20 260 L50 200 L230 200 L260 260 L250 260 L230 210 L60 210 L40 260 Z" fill="#4a5568" opacity="0.9"/>
+                                <path d="M50 200 L60 200 L65 190 L230 190 L235 200 L230 200" stroke="#718096" stroke-width="2"/>
+                                <!-- 船体细节 -->
+                                <path d="M60 210 L70 240" stroke="#718096" stroke-width="1.5" opacity="0.6"/>
+                                <path d="M220 210 L210 240" stroke="#718096" stroke-width="1.5" opacity="0.6"/>
+                                <!-- 焊缝 -->
+                                <path d="M100 210 L200 210" stroke="#ed8936" stroke-width="3" opacity="0.8"/>
+                                <path d="M100 210 L200 210" stroke="#fbd38d" stroke-width="1" opacity="0.6"/>
+                                <!-- 焊接火花 -->
+                                <circle cx="140" cy="195" r="3" fill="#ed8936"/>
+                                <circle cx="148" cy="185" r="2" fill="#f6ad55"/>
+                                <circle cx="132" cy="188" r="1.5" fill="#fbd38d"/>
+                                <circle cx="155" cy="190" r="1" fill="#ed8936"/>
+                                <!-- 烟囱 -->
+                                <rect x="170" y="130" width="25" height="70" rx="3" fill="#2d3748" opacity="0.8"/>
+                                <rect x="165" y="120" width="35" height="15" rx="2" fill="#4a5568" opacity="0.7"/>
+                                <!-- 吊装设备 -->
+                                <path d="M150 100 L150 200" stroke="#718096" stroke-width="3" opacity="0.5"/>
+                                <path d="M150 100 L200 100" stroke="#718096" stroke-width="2" opacity="0.5"/>
+                                <!-- 橙色主题 -->
+                                <rect x="0" y="350" width="280" height="4" fill="#ed8936"/>
+                            </svg>
+                            <div class="app-card-scene-overlay"></div>
+                        </div>
+                        <div class="app-card-scene-dot"></div>
+                        <div class="app-card-scene-content">
+                            <div class="app-card-scene-tag">SHIPBUILDING</div>
+                            <div class="app-card-scene-name">船舶制造</div>
+                            <div class="app-card-scene-desc">船体焊缝打磨、涂装前处理、除锈</div>
+                        </div>
                     </div>
-                    <span class="app-name">船舶制造</span>
-                </div>
-                <div class="application-item">
-                    <div class="app-icon">
-                        <svg viewBox="0 0 40 40" fill="none">
-                            <rect x="8" y="18" width="24" height="16" rx="2" stroke="currentColor" stroke-width="2"/>
-                            <circle cx="16" cy="12" r="6" stroke="currentColor" stroke-width="2"/>
-                            <path d="M16 18 L16 24" stroke="currentColor" stroke-width="2"/>
-                            <path d="M24 26 L28 30" stroke="currentColor" stroke-width="2"/>
-                        </svg>
+                    <!-- 汽车配件 -->
+                    <div class="app-card-scene">
+                        <div class="app-card-scene-img">
+                            <svg viewBox="0 0 280 360" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%">
+                                <defs><linearGradient id="car1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1a1a2e"/><stop offset="100%" stop-color="#16213e"/></linearGradient></defs>
+                                <rect width="280" height="360" fill="url(#car1)"/>
+                                <!-- 背景 -->
+                                <rect x="0" y="0" width="280" height="250" fill="#0f172a" opacity="0.6"/>
+                                <!-- 车间地面 -->
+                                <rect x="0" y="280" width="280" height="80" fill="#1e293b" opacity="0.8"/>
+                                <!-- 格栅地板 -->
+                                <path d="M0 290 L280 290" stroke="#334155" stroke-width="1"/>
+                                <path d="M0 300 L280 300" stroke="#334155" stroke-width="1"/>
+                                <path d="M0 310 L280 310" stroke="#334155" stroke-width="1"/>
+                                <!-- 汽车底盘（俯视） -->
+                                <path d="M60 200 L220 200 L240 240 L40 240 Z" fill="#334155" opacity="0.8" rx="10"/>
+                                <rect x="70" y="205" width="140" height="30" rx="5" fill="#1e293b" opacity="0.7"/>
+                                <!-- 轮毂 -->
+                                <circle cx="90" cy="240" r="18" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+                                <circle cx="90" cy="240" r="8" fill="#0f172a"/>
+                                <path d="M90 228 L90 235 M90 245 L90 252 M82 240 L89 240 M91 240 L98 240" stroke="#475569" stroke-width="1.5"/>
+                                <circle cx="190" cy="240" r="18" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+                                <circle cx="190" cy="240" r="8" fill="#0f172a"/>
+                                <path d="M190 228 L190 235 M190 245 L190 252 M182 240 L189 240 M191 240 L198 240" stroke="#475569" stroke-width="1.5"/>
+                                <!-- 排气管 -->
+                                <rect x="100" y="250" width="80" height="10" rx="5" fill="#4a5568" opacity="0.7"/>
+                                <!-- 打磨光 -->
+                                <circle cx="140" cy="215" r="8" fill="#ed8936" opacity="0.6"/>
+                                <circle cx="140" cy="215" r="4" fill="#f6ad55" opacity="0.8"/>
+                                <circle cx="140" cy="215" r="15" fill="none" stroke="#ed8936" stroke-width="1" opacity="0.3"/>
+                                <!-- 火花 -->
+                                <circle cx="150" cy="208" r="2" fill="#ed8936"/>
+                                <circle cx="158" cy="212" r="1.5" fill="#f6ad55"/>
+                                <circle cx="130" cy="210" r="1" fill="#fbd38d"/>
+                                <!-- 工作灯 -->
+                                <circle cx="220" cy="150" r="30" fill="#f6ad55" opacity="0.05"/>
+                                <circle cx="220" cy="150" r="15" fill="#f6ad55" opacity="0.08"/>
+                                <path d="M220 130 L220 170 M200 150 L240 150" stroke="#f6ad55" stroke-width="1" opacity="0.2"/>
+                                <!-- 橙色主题 -->
+                                <rect x="0" y="350" width="280" height="4" fill="#ed8936"/>
+                            </svg>
+                            <div class="app-card-scene-overlay"></div>
+                        </div>
+                        <div class="app-card-scene-dot"></div>
+                        <div class="app-card-scene-content">
+                            <div class="app-card-scene-tag">AUTOMOTIVE</div>
+                            <div class="app-card-scene-name">汽车配件</div>
+                            <div class="app-card-scene-desc">排气管、车架钣金打磨，焊点去除</div>
+                        </div>
                     </div>
-                    <span class="app-name">汽车配件</span>
-                </div>
-                <div class="application-item">
-                    <div class="app-icon">
-                        <svg viewBox="0 0 40 40" fill="none">
-                            <rect x="6" y="10" width="28" height="20" rx="2" stroke="currentColor" stroke-width="2"/>
-                            <path d="M6 16 L34 16" stroke="currentColor" stroke-width="2"/>
-                            <path d="M12 22 L20 22 M12 26 L28 26" stroke="currentColor" stroke-width="1.5"/>
-                        </svg>
+                    <!-- 轨道交通 -->
+                    <div class="app-card-scene">
+                        <div class="app-card-scene-img">
+                            <svg viewBox="0 0 280 360" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%">
+                                <defs><linearGradient id="rail1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1e3a5f"/><stop offset="100%" stop-color="#0c1929"/></linearGradient></defs>
+                                <rect width="280" height="360" fill="url(#rail1)"/>
+                                <!-- 隧道背景 -->
+                                <path d="M0 0 L280 0 L280 220 Q140 240 0 220 Z" fill="#0f2540" opacity="0.6"/>
+                                <!-- 轨道 -->
+                                <rect x="0" y="290" width="280" height="8" fill="#374151"/>
+                                <rect x="0" y="300" width="280" height="4" fill="#374151"/>
+                                <rect x="0" y="306" width="280" height="2" fill="#374151"/>
+                                <!-- 枕木 -->
+                                <rect x="10" y="290" width="20" height="16" rx="2" fill="#4a5568" opacity="0.8"/>
+                                <rect x="50" y="290" width="20" height="16" rx="2" fill="#4a5568" opacity="0.8"/>
+                                <rect x="90" y="290" width="20" height="16" rx="2" fill="#4a5568" opacity="0.8"/>
+                                <rect x="130" y="290" width="20" height="16" rx="2" fill="#4a5568" opacity="0.8"/>
+                                <rect x="170" y="290" width="20" height="16" rx="2" fill="#4a5568" opacity="0.8"/>
+                                <rect x="210" y="290" width="20" height="16" rx="2" fill="#4a5568" opacity="0.8"/>
+                                <rect x="250" y="290" width="20" height="16" rx="2" fill="#4a5568" opacity="0.8"/>
+                                <!-- 高铁车厢侧视 -->
+                                <rect x="20" y="150" width="240" height="110" rx="8" fill="#1e3a5f" opacity="0.9"/>
+                                <!-- 车窗 -->
+                                <rect x="35" y="165" width="40" height="25" rx="4" fill="#0ea5e9" opacity="0.3"/>
+                                <rect x="85" y="165" width="40" height="25" rx="4" fill="#0ea5e9" opacity="0.3"/>
+                                <rect x="135" y="165" width="40" height="25" rx="4" fill="#0ea5e9" opacity="0.3"/>
+                                <rect x="185" y="165" width="40" height="25" rx="4" fill="#0ea5e9" opacity="0.3"/>
+                                <rect x="235" y="165" width="20" height="25" rx="4" fill="#0ea5e9" opacity="0.3"/>
+                                <!-- 车门 -->
+                                <rect x="35" y="195" width="30" height="55" rx="3" fill="#0c2d4a" opacity="0.8"/>
+                                <rect x="85" y="195" width="30" height="55" rx="3" fill="#0c2d4a" opacity="0.8"/>
+                                <rect x="135" y="195" width="30" height="55" rx="3" fill="#0c2d4a" opacity="0.8"/>
+                                <rect x="185" y="195" width="30" height="55" rx="3" fill="#0c2d4a" opacity="0.8"/>
+                                <!-- 轮对 -->
+                                <circle cx="70" cy="268" r="14" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+                                <circle cx="70" cy="268" r="5" fill="#0f172a"/>
+                                <circle cx="210" cy="268" r="14" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+                                <circle cx="210" cy="268" r="5" fill="#0f172a"/>
+                                <!-- 打磨区域 -->
+                                <circle cx="140" cy="210" r="6" fill="#ed8936" opacity="0.7"/>
+                                <circle cx="140" cy="210" r="3" fill="#fff" opacity="0.5"/>
+                                <!-- 火花 -->
+                                <circle cx="148" cy="202" r="2" fill="#ed8936"/>
+                                <circle cx="155" cy="207" r="1.5" fill="#f6ad55"/>
+                                <circle cx="132" cy="205" r="1" fill="#fbd38d"/>
+                                <!-- 橙色主题 -->
+                                <rect x="0" y="350" width="280" height="4" fill="#ed8936"/>
+                            </svg>
+                            <div class="app-card-scene-overlay"></div>
+                        </div>
+                        <div class="app-card-scene-dot"></div>
+                        <div class="app-card-scene-content">
+                            <div class="app-card-scene-tag">RAILWAY</div>
+                            <div class="app-card-scene-name">轨道交通</div>
+                            <div class="app-card-scene-desc">钢轨焊接头打磨、车轮修形维护</div>
+                        </div>
                     </div>
-                    <span class="app-name">轨道交通</span>
-                </div>
-                <div class="application-item">
-                    <div class="app-icon">
-                        <svg viewBox="0 0 40 40" fill="none">
-                            <circle cx="20" cy="20" r="12" stroke="currentColor" stroke-width="2"/>
-                            <circle cx="20" cy="20" r="4" stroke="currentColor" stroke-width="2"/>
-                            <path d="M20 4 L20 8" stroke="currentColor" stroke-width="2"/>
-                            <path d="M20 32 L20 36" stroke="currentColor" stroke-width="2"/>
-                            <path d="M4 20 L8 20" stroke="currentColor" stroke-width="2"/>
-                            <path d="M32 20 L36 20" stroke="currentColor" stroke-width="2"/>
-                        </svg>
+                    <!-- 机械加工 -->
+                    <div class="app-card-scene">
+                        <div class="app-card-scene-img">
+                            <svg viewBox="0 0 280 360" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%">
+                                <defs><linearGradient id="mc1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1f2937"/><stop offset="100%" stop-color="#111827"/></linearGradient></defs>
+                                <rect width="280" height="360" fill="url(#mc1)"/>
+                                <!-- 背景 -->
+                                <rect x="0" y="0" width="280" height="360" fill="#0f172a" opacity="0.3"/>
+                                <!-- 机床 -->
+                                <rect x="20" y="100" width="240" height="180" rx="8" fill="#1e293b" opacity="0.8"/>
+                                <rect x="30" y="110" width="200" height="140" rx="4" fill="#0f172a" opacity="0.7"/>
+                                <!-- 工件（圆形） -->
+                                <circle cx="140" cy="180" r="55" fill="#374151" stroke="#4b5563" stroke-width="2"/>
+                                <circle cx="140" cy="180" r="40" fill="none" stroke="#4b5563" stroke-width="1" stroke-dasharray="4 4"/>
+                                <circle cx="140" cy="180" r="20" fill="#374151" stroke="#4b5563" stroke-width="1"/>
+                                <circle cx="140" cy="180" r="5" fill="#4b5563"/>
+                                <!-- 刀具 -->
+                                <rect x="190" y="140" width="60" height="8" rx="4" fill="#6b7280"/>
+                                <path d="M250 144 L265 144 L260 140 L265 144 L260 148 Z" fill="#9ca3af"/>
+                                <!-- 打磨光 -->
+                                <circle cx="200" cy="180" r="6" fill="#ed8936" opacity="0.6"/>
+                                <circle cx="200" cy="180" r="3" fill="#f6ad55" opacity="0.8"/>
+                                <circle cx="200" cy="180" r="12" fill="none" stroke="#ed8936" stroke-width="1" opacity="0.3"/>
+                                <!-- 火花 -->
+                                <circle cx="208" cy="172" r="2.5" fill="#ed8936"/>
+                                <circle cx="215" cy="178" r="2" fill="#f6ad55"/>
+                                <circle cx="212" cy="185" r="1.5" fill="#fbd38d"/>
+                                <circle cx="218" cy="170" r="1" fill="#ed8936"/>
+                                <!-- 控制面板 -->
+                                <rect x="40" y="270" width="200" height="60" rx="6" fill="#1e293b" opacity="0.9"/>
+                                <circle cx="60" cy="300" r="8" fill="#22c55e" opacity="0.8"/>
+                                <circle cx="85" cy="300" r="8" fill="#ef4444" opacity="0.6"/>
+                                <rect x="105" y="292" width="60" height="16" rx="2" fill="#0f172a"/>
+                                <rect x="110" y="295" width="30" height="10" rx="1" fill="#22c55e" opacity="0.5"/>
+                                <!-- 传送带 -->
+                                <rect x="0" y="330" width="280" height="15" rx="3" fill="#374151"/>
+                                <circle cx="40" cy="337" r="6" fill="#4b5563"/>
+                                <circle cx="120" cy="337" r="6" fill="#4b5563"/>
+                                <circle cx="200" cy="337" r="6" fill="#4b5563"/>
+                                <circle cx="260" cy="337" r="6" fill="#4b5563"/>
+                                <!-- 橙色主题 -->
+                                <rect x="0" y="350" width="280" height="4" fill="#ed8936"/>
+                            </svg>
+                            <div class="app-card-scene-overlay"></div>
+                        </div>
+                        <div class="app-card-scene-dot"></div>
+                        <div class="app-card-scene-content">
+                            <div class="app-card-scene-tag">MACHINING</div>
+                            <div class="app-card-scene-name">机械加工</div>
+                            <div class="app-card-scene-desc">外圆磨、平面磨、精磨抛光加工</div>
+                        </div>
                     </div>
-                    <span class="app-name">机械加工</span>
-                </div>
-                <div class="application-item">
-                    <div class="app-icon">
-                        <svg viewBox="0 0 40 40" fill="none">
-                            <path d="M10 30 Q20 10 30 30" stroke="currentColor" stroke-width="2"/>
-                            <path d="M15 25 Q20 15 25 25" stroke="currentColor" stroke-width="2"/>
-                            <rect x="12" y="30" width="16" height="4" stroke="currentColor" stroke-width="2"/>
-                        </svg>
+                    <!-- 石材加工 -->
+                    <div class="app-card-scene">
+                        <div class="app-card-scene-img">
+                            <svg viewBox="0 0 280 360" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%">
+                                <defs><linearGradient id="stone1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1a0a2e"/><stop offset="100%" stop-color="#2d1b69"/></linearGradient></defs>
+                                <rect width="280" height="360" fill="url(#stone1)"/>
+                                <!-- 石材纹理 -->
+                                <path d="M0 200 Q40 180 80 200 Q120 220 160 200 Q200 180 240 200 Q260 210 280 200 L280 360 L0 360 Z" fill="#4a3f6b" opacity="0.6"/>
+                                <path d="M0 220 Q60 240 120 220 Q180 200 240 220 Q260 225 280 220 L280 360 L0 360 Z" fill="#3d2f5c" opacity="0.7"/>
+                                <!-- 石材大板 -->
+                                <rect x="10" y="100" width="260" height="160" rx="4" fill="#5b4a8a" opacity="0.5"/>
+                                <rect x="10" y="100" width="260" height="160" rx="4" fill="none" stroke="#7c6aad" stroke-width="2" opacity="0.5"/>
+                                <!-- 石材纹理线 -->
+                                <path d="M20 130 Q100 110 180 135 Q220 145 260 130" stroke="#8b7fc0" stroke-width="1" opacity="0.4"/>
+                                <path d="M20 160 Q80 175 150 160 Q200 148 260 165" stroke="#8b7fc0" stroke-width="1" opacity="0.3"/>
+                                <path d="M20 190 Q100 175 180 195 Q230 205 260 190" stroke="#8b7fc0" stroke-width="1" opacity="0.4"/>
+                                <!-- 抛光效果 -->
+                                <rect x="20" y="110" width="120" height="80" rx="2" fill="#9b8ad0" opacity="0.15"/>
+                                <!-- 磨轮 -->
+                                <circle cx="180" cy="170" r="45" fill="#2d1b69" opacity="0.8"/>
+                                <circle cx="180" cy="170" r="45" fill="none" stroke="#7c6aad" stroke-width="3"/>
+                                <circle cx="180" cy="170" r="28" fill="none" stroke="#6b5a9e" stroke-width="2"/>
+                                <circle cx="180" cy="170" r="10" fill="#3d2f5c"/>
+                                <!-- 打磨光（金刚石效果） -->
+                                <circle cx="180" cy="170" r="20" fill="#a78bfa" opacity="0.3"/>
+                                <circle cx="180" cy="170" r="10" fill="#c4b5fd" opacity="0.5"/>
+                                <circle cx="180" cy="170" r="4" fill="#fff" opacity="0.7"/>
+                                <!-- 精磨痕迹 -->
+                                <path d="M135 170 Q180 145 225 170" stroke="#c4b5fd" stroke-width="1" opacity="0.4"/>
+                                <path d="M140 178 Q180 155 220 178" stroke="#c4b5fd" stroke-width="1" opacity="0.3"/>
+                                <!-- 地面 -->
+                                <rect x="0" y="290" width="280" height="70" fill="#1a0a2e" opacity="0.8"/>
+                                <!-- 橙色主题 -->
+                                <rect x="0" y="350" width="280" height="4" fill="#ed8936"/>
+                            </svg>
+                            <div class="app-card-scene-overlay"></div>
+                        </div>
+                        <div class="app-card-scene-dot"></div>
+                        <div class="app-card-scene-content">
+                            <div class="app-card-scene-tag">STONE PROCESSING</div>
+                            <div class="app-card-scene-name">石材加工</div>
+                            <div class="app-card-scene-desc">大理石、花岗岩切割与精磨抛光</div>
+                        </div>
                     </div>
-                    <span class="app-name">石材加工</span>
+                    <!-- 航空航天 -->
+                    <div class="app-card-scene">
+                        <div class="app-card-scene-img">
+                            <svg viewBox="0 0 280 360" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%">
+                                <defs><linearGradient id="aero1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#0c1a2e"/><stop offset="100%" stop-color="#1e3a5c"/></linearGradient></defs>
+                                <rect width="280" height="360" fill="url(#aero1)"/>
+                                <!-- 星空 -->
+                                <circle cx="30" cy="40" r="1" fill="#fff" opacity="0.4"/>
+                                <circle cx="80" cy="20" r="1.5" fill="#fff" opacity="0.3"/>
+                                <circle cx="150" cy="35" r="1" fill="#fff" opacity="0.5"/>
+                                <circle cx="220" cy="15" r="1" fill="#fff" opacity="0.4"/>
+                                <circle cx="250" cy="50" r="2" fill="#fff" opacity="0.3"/>
+                                <circle cx="100" cy="60" r="1" fill="#fff" opacity="0.2"/>
+                                <!-- 飞机机身（侧视） -->
+                                <path d="M30 180 Q60 160 100 155 L200 155 Q240 160 255 180 Q240 190 200 193 L100 193 Q60 190 30 180 Z" fill="#1e3a5c" opacity="0.9"/>
+                                <!-- 机翼 -->
+                                <path d="M100 175 L30 220 L50 225 L110 180 Z" fill="#1e3a5c" opacity="0.8"/>
+                                <path d="M100 178 L30 220" stroke="#2c5282" stroke-width="1" opacity="0.5"/>
+                                <path d="M200 175 L255 220 L240 222 L195 178 Z" fill="#1e3a5c" opacity="0.8"/>
+                                <!-- 机身细节 -->
+                                <path d="M60 165 Q100 158 200 158" stroke="#2c5282" stroke-width="1" opacity="0.4"/>
+                                <path d="M60 188 Q100 195 200 195" stroke="#2c5282" stroke-width="1" opacity="0.4"/>
+                                <!-- 驾驶舱 -->
+                                <path d="M30 175 Q35 165 50 165 L70 165 Q85 168 90 178 L85 183 Q70 188 55 185 Q38 185 30 180 Z" fill="#0ea5e9" opacity="0.3"/>
+                                <!-- 发动机 -->
+                                <ellipse cx="130" cy="200" rx="18" ry="10" fill="#0c2d4a" stroke="#1e3a5c" stroke-width="2"/>
+                                <ellipse cx="180" cy="200" rx="18" ry="10" fill="#0c2d4a" stroke="#1e3a5c" stroke-width="2"/>
+                                <!-- 尾翼 -->
+                                <path d="M240 175 L260 140 L265 178 Z" fill="#1e3a5c" opacity="0.8"/>
+                                <!-- 打磨区域 -->
+                                <circle cx="140" cy="170" r="5" fill="#ed8936" opacity="0.7"/>
+                                <circle cx="140" cy="170" r="2.5" fill="#fff" opacity="0.5"/>
+                                <!-- 火花 -->
+                                <circle cx="148" cy="163" r="2" fill="#ed8936"/>
+                                <circle cx="155" cy="168" r="1.5" fill="#f6ad55"/>
+                                <circle cx="132" cy="165" r="1" fill="#fbd38d"/>
+                                <!-- 地面线 -->
+                                <rect x="0" y="300" width="280" height="2" fill="#2c5282" opacity="0.3"/>
+                                <!-- 橙色主题 -->
+                                <rect x="0" y="350" width="280" height="4" fill="#ed8936"/>
+                            </svg>
+                            <div class="app-card-scene-overlay"></div>
+                        </div>
+                        <div class="app-card-scene-dot"></div>
+                        <div class="app-card-scene-content">
+                            <div class="app-card-scene-tag">AEROSPACE</div>
+                            <div class="app-card-scene-name">航空航天</div>
+                            <div class="app-card-scene-desc">精密零件表面处理、复合材料研磨</div>
+                        </div>
+                    </div>
+                    <!-- 压力容器 -->
+                    <div class="app-card-scene">
+                        <div class="app-card-scene-img">
+                            <svg viewBox="0 0 280 360" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%">
+                                <defs><linearGradient id="pv1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1a202c"/><stop offset="100%" stop-color="#2d3748"/></linearGradient></defs>
+                                <rect width="280" height="360" fill="url(#pv1)"/>
+                                <!-- 背景管道 -->
+                                <rect x="0" y="50" width="280" height="10" rx="5" fill="#374151" opacity="0.5"/>
+                                <rect x="0" y="300" width="280" height="10" rx="5" fill="#374151" opacity="0.5"/>
+                                <!-- 大型压力容器 -->
+                                <ellipse cx="140" cy="80" rx="20" ry="15" fill="#4a5568" opacity="0.8"/>
+                                <rect x="40" y="80" width="200" height="220" fill="#374151" opacity="0.8"/>
+                                <ellipse cx="140" cy="300" rx="100" ry="15" fill="#4a5568" opacity="0.8"/>
+                                <!-- 焊缝环 -->
+                                <path d="M40 120 Q140 115 240 120" stroke="#718096" stroke-width="3" opacity="0.7"/>
+                                <path d="M40 170 Q140 165 240 170" stroke="#718096" stroke-width="3" opacity="0.7"/>
+                                <path d="M40 220 Q140 215 240 220" stroke="#718096" stroke-width="3" opacity="0.7"/>
+                                <path d="M40 270 Q140 265 240 270" stroke="#718096" stroke-width="3" opacity="0.7"/>
+                                <!-- 支座 -->
+                                <rect x="60" y="295" width="25" height="50" rx="3" fill="#4a5568"/>
+                                <rect x="195" y="295" width="25" height="50" rx="3" fill="#4a5568"/>
+                                <rect x="55" y="320" width="35" height="8" rx="2" fill="#4a5568"/>
+                                <rect x="190" y="320" width="35" height="8" rx="2" fill="#4a5568"/>
+                                <!-- 人孔 -->
+                                <circle cx="140" cy="150" r="20" fill="#2d3748" stroke="#718096" stroke-width="2"/>
+                                <circle cx="140" cy="150" r="12" fill="#1a202c"/>
+                                <circle cx="140" cy="150" r="5" fill="#374151"/>
+                                <!-- 打磨区 -->
+                                <circle cx="140" cy="200" r="8" fill="#ed8936" opacity="0.6"/>
+                                <circle cx="140" cy="200" r="4" fill="#fff" opacity="0.5"/>
+                                <!-- 打磨光 -->
+                                <circle cx="140" cy="200" r="16" fill="#ed8936" opacity="0.1"/>
+                                <circle cx="140" cy="200" r="25" fill="#ed8936" opacity="0.05"/>
+                                <!-- 火花 -->
+                                <circle cx="150" cy="190" r="3" fill="#ed8936"/>
+                                <circle cx="158" cy="198" r="2" fill="#f6ad55"/>
+                                <circle cx="130" cy="193" r="2" fill="#fbd38d"/>
+                                <circle cx="155" cy="183" r="1.5" fill="#ed8936"/>
+                                <!-- 阀门 -->
+                                <rect x="235" y="140" width="30" height="10" rx="3" fill="#4a5568"/>
+                                <circle cx="250" cy="135" r="8" fill="#4a5568"/>
+                                <path d="M250 127 L250 143" stroke="#718096" stroke-width="2"/>
+                                <!-- 橙色主题 -->
+                                <rect x="0" y="350" width="280" height="4" fill="#ed8936"/>
+                            </svg>
+                            <div class="app-card-scene-overlay"></div>
+                        </div>
+                        <div class="app-card-scene-dot"></div>
+                        <div class="app-card-scene-content">
+                            <div class="app-card-scene-tag">PRESSURE VESSEL</div>
+                            <div class="app-card-scene-name">压力容器</div>
+                            <div class="app-card-scene-desc">大型罐体焊缝打磨、容器表面处理</div>
+                        </div>
+                    </div>
                 </div>
+                <button class="scroll-btn scroll-btn-right" onclick="scrollApps(1)" aria-label="向右滚动">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+                </button>
             </div>
         </div>
     </section>
@@ -963,6 +1321,36 @@ document.addEventListener('DOMContentLoaded', function() {
             if (link.getAttribute('href') === '#' + current) link.classList.add('active');
         });
     });
+
+    // Applications scroll - drag to scroll
+    const appsScroll = document.getElementById('appsScroll');
+    let isDown = false, startX = 0, scrollLeft = 0;
+    appsScroll.addEventListener('mousedown', (e) => {
+        isDown = true;
+        appsScroll.classList.add('grabbing');
+        startX = e.pageX - appsScroll.offsetLeft;
+        scrollLeft = appsScroll.scrollLeft;
+    });
+    appsScroll.addEventListener('mouseleave', () => { isDown = false; appsScroll.classList.remove('grabbing'); });
+    appsScroll.addEventListener('mouseup', () => { isDown = false; appsScroll.classList.remove('grabbing'); });
+    appsScroll.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - appsScroll.offsetLeft;
+        appsScroll.scrollLeft = scrollLeft - (x - startX);
+    });
+    appsScroll.addEventListener('touchstart', (e) => {
+        startX = e.touches[0].pageX - appsScroll.offsetLeft;
+        scrollLeft = appsScroll.scrollLeft;
+    }, { passive: true });
+    appsScroll.addEventListener('touchmove', (e) => {
+        const x = e.touches[0].pageX - appsScroll.offsetLeft;
+        appsScroll.scrollLeft = scrollLeft - (x - startX);
+    }, { passive: true });
+
+    window.scrollApps = function(dir) {
+        appsScroll.scrollBy({ left: dir * 300, behavior: 'smooth' });
+    };
 
     window.addEventListener('load', function() { document.body.classList.add('loaded'); });
 
