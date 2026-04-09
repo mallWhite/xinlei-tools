@@ -37,7 +37,13 @@ img { max-width: 100%; height: auto; }
 .container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
 
 /* Header */
-.header { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+.header { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.97); box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+@supports (backdrop-filter: blur(10px)) {
+    .header { backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); background: rgba(255,255,255,0.92); }
+}
+@supports not (backdrop-filter: blur(10px)) {
+    .header { background: rgba(255,255,255,0.99); }
+}
 .header-inner { display: flex; align-items: center; justify-content: space-between; height: 80px; }
 .logo { display: flex; align-items: center; gap: 1rem; }
 .logo-icon { width: 48px; height: 48px; color: var(--primary); }
@@ -71,7 +77,26 @@ img { max-width: 100%; height: auto; }
 /* Image Gallery */
 .gallery { position: relative; }
 .gallery-main { width: 100%; aspect-ratio: 1; background: linear-gradient(135deg, var(--gray-200), var(--gray-300)); border-radius: 12px; display: flex; align-items: center; justify-content: center; overflow: hidden; margin-bottom: 1rem; position: relative; }
+@supports not (aspect-ratio: 1) {
+    .gallery-main { height: 0; padding-bottom: 100%; }
+    .gallery-main > * { position: absolute; top: 20%; left: 20%; width: 60%; height: 60%; }
+}
 .gallery-main svg { width: 60%; height: 60%; color: var(--gray-500); }
+
+/* 产品详情响应式 */
+@media (max-width: 768px) {
+    .product-hero-grid { grid-template-columns: 1fr; }
+    .specs-grid { grid-template-columns: 1fr; }
+    .apps-grid { grid-template-columns: repeat(2, 1fr); }
+    .related-grid { grid-template-columns: 1fr; }
+    .breadcrumb { padding-top: 84px; }
+}
+@media (max-width: 480px) {
+    .product-title { font-size: 1.75rem; }
+    .product-actions { flex-direction: column; }
+    .product-actions .btn { width: 100%; }
+    .apps-grid { grid-template-columns: 1fr; }
+}
 .gallery-badge { position: absolute; top: 1rem; left: 1rem; background: var(--accent); color: var(--white); padding: 0.25rem 0.75rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700; }
 .gallery-thumbs { display: flex; gap: 0.75rem; }
 .gallery-thumb { width: 80px; height: 80px; background: linear-gradient(135deg, var(--gray-200), var(--gray-300)); border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; border: 2px solid transparent; transition: var(--transition); }

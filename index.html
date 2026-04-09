@@ -63,10 +63,17 @@ img { max-width: 100%; height: auto; }
 button { font-family: inherit; cursor: pointer; border: none; background: none; }
 input, textarea { font-family: inherit; font-size: inherit; }
 
-.container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 var(--space-md); }
+.container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+@media (max-width: 480px) { .container { padding: 0 1rem; } }
 
-/* Header */
-.header { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); box-shadow: var(--shadow-sm); transition: var(--transition); }
+/* Header - backdrop-filter 兼容处理 */
+.header { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255, 255, 255, 0.97); box-shadow: var(--shadow-sm); transition: var(--transition); }
+@supports (backdrop-filter: blur(10px)) {
+    .header { backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); background: rgba(255, 255, 255, 0.92); }
+}
+@supports not (backdrop-filter: blur(10px)) {
+    .header { background: rgba(255, 255, 255, 0.99); }
+}
 .header.scrolled { box-shadow: var(--shadow-md); }
 .header-inner { display: flex; align-items: center; justify-content: space-between; height: 80px; }
 .logo { display: flex; align-items: center; gap: var(--space-sm); }
@@ -159,7 +166,11 @@ input, textarea { font-family: inherit; font-size: inherit; }
 .video-section { background: var(--bg-dark); padding: var(--space-3xl) 0; position: relative; overflow: hidden; }
 .video-section::before { content: ''; position: absolute; top: -50%; right: -10%; width: 400px; height: 400px; background: radial-gradient(circle, rgba(237,137,54,0.08) 0%, transparent 70%); border-radius: 50%; }
 .video-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: var(--space-2xl); align-items: center; }
-.video-player { position: relative; border-radius: var(--radius-lg); overflow: hidden; background: var(--gray-900); aspect-ratio: 16/9; }
+.video-player { position: relative; border-radius: var(--radius-lg); overflow: hidden; background: var(--gray-900); /* aspect-ratio 兼容 */ aspect-ratio: 16/9; }
+@supports not (aspect-ratio: 16/9) {
+    .video-player { height: 0; padding-bottom: 56.25%; }
+    .video-player video, .video-placeholder { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+}
 .video-player video { width: 100%; height: 100%; object-fit: cover; }
 .video-placeholder { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%); cursor: pointer; transition: var(--transition); }
 .video-placeholder:hover { background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%); }
@@ -208,8 +219,9 @@ input, textarea { font-family: inherit; font-size: inherit; }
 /* 应用领域 - 横向滚动 */
 .applications-section { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); padding: var(--space-3xl) 0; overflow: hidden; }
 .applications-wrapper { position: relative; }
-.applications-scroll { display: flex; gap: 1.25rem; overflow-x: auto; padding: 1rem 1.5rem 2rem; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; scrollbar-width: none; cursor: grab; user-select: none; }
+.applications-scroll { display: flex; gap: 1.25rem; overflow-x: auto; overflow-y: hidden; padding: 1rem 1.5rem 2rem; scroll-behavior: smooth; scrollbar-width: none; -ms-overflow-style: none; touch-action: pan-x pan-y; user-select: none; }
 .applications-scroll::-webkit-scrollbar { display: none; }
+.applications-scroll::-moz-scrollbar { display: none; }
 .applications-scroll.grabbing { cursor: grabbing; scroll-behavior: auto; }
 .app-card-scene { flex: 0 0 280px; height: 360px; border-radius: 16px; overflow: hidden; position: relative; background: var(--gray-900); box-shadow: 0 4px 20px rgba(0,0,0,0.3); transition: transform 0.3s ease, box-shadow 0.3s ease; }
 .app-card-scene:hover { transform: translateY(-8px) scale(1.02); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
@@ -277,10 +289,13 @@ a.contact-value:hover { color: var(--accent); }
     .video-grid { grid-template-columns: 1fr; }
 }
 @media (max-width: 768px) {
-    :root { --space-3xl: 4rem; }
+    :root { --space-3xl: 4rem; --header-height: 64px; }
     .nav { display: none; }
     .mobile-menu-btn { display: flex; }
     .mobile-menu { display: block; }
+    .mobile-menu { top: 64px; }
+    .header-inner { height: 64px; }
+    .hero { padding-top: 84px; min-height: auto; padding-bottom: 3rem; }
     .hero .container { grid-template-columns: 1fr; text-align: center; }
     .hero-title { font-size: 2.25rem; }
     .hero-desc { margin: 0 auto var(--space-lg); }
@@ -288,19 +303,40 @@ a.contact-value:hover { color: var(--accent); }
     .hero-stats { justify-content: center; }
     .hero-visual { display: none; }
     .section-title { font-size: 2rem; }
-    .products-grid { grid-template-columns: 1fr; }
+    /* 产品区横向滚动（移动端） */
+    .products-grid { display: flex; overflow-x: auto; gap: 1rem; padding-bottom: 1rem; scroll-snap-type: x mandatory; scrollbar-width: none; -ms-overflow-style: none; }
+    .products-grid::-webkit-scrollbar { display: none; }
+    .product-card { flex: 0 0 280px; scroll-snap-align: start; }
+    .products-grid { flex-wrap: unset; }
+    /* 视频区 */
+    .video-grid { grid-template-columns: 1fr; }
+    .video-list { flex-direction: row; overflow-x: auto; scrollbar-width: none; -ms-overflow-style: none; }
+    .video-list::-webkit-scrollbar { display: none; }
+    .video-item { flex: 0 0 200px; }
     .about-grid { grid-template-columns: 1fr; }
     .about-visual { order: -1; }
     .advantages-grid { grid-template-columns: 1fr; }
+    /* 应用领域场景卡缩窄 */
+    .app-card-scene { flex: 0 0 240px; height: 300px; }
     .contact-grid { grid-template-columns: 1fr; }
     .contact-items { grid-template-columns: 1fr; }
     .footer-grid { grid-template-columns: 1fr; text-align: center; }
     .footer-logo { justify-content: center; }
 }
 @media (max-width: 480px) {
-    .hero-title { font-size: 1.875rem; }
-    .hero-stats { flex-direction: column; gap: var(--space-md); }
-    .btn { width: 100%; }
+    :root { --space-3xl: 3rem; --space-2xl: 2.5rem; }
+    .hero-title { font-size: 1.75rem; }
+    .hero-stats { flex-direction: column; gap: var(--space-sm); }
+    .hero-cta { flex-direction: column; align-items: stretch; }
+    .hero-cta .btn { width: 100%; }
+    .section-title { font-size: 1.625rem; }
+    /* 产品滚动卡更窄 */
+    .product-card { flex: 0 0 260px; }
+    /* 视频项更窄 */
+    .video-item { flex: 0 0 160px; }
+    /* 应用领域卡更窄 */
+    .app-card-scene { flex: 0 0 220px; height: 280px; }
+    .footer-grid { grid-template-columns: 1fr; gap: var(--space-lg); }
 }
 
 /* 动画 */
@@ -1256,8 +1292,10 @@ document.addEventListener('DOMContentLoaded', function() {
     if (contactForm) {
         contactForm.addEventListener('submit', function(e) {
             e.preventDefault();
-            const formData = new FormData(this);
-            const data = Object.fromEntries(formData);
+            var formData = new FormData(this);
+            // Object.fromEntries 兼容替代 (ES2019替代ES5写法)
+            var data = {};
+            formData.forEach(function(value, key) { data[key] = value; });
             if (!data.name || !data.phone || !data.message) { alert('请填写必填项（姓名、电话、需求描述）'); return; }
             if (!/^1[3-9]\d{9}$/.test(data.phone)) { alert('请输入正确的手机号码'); return; }
             const submitBtn = this.querySelector('button[type="submit"]');

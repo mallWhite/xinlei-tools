@@ -13,8 +13,12 @@ html{scroll-behavior:smooth;font-size:16px}
 body{font-family:var(--font-primary);color:var(--gray-800);line-height:1.6}
 a{text-decoration:none;color:inherit;transition:var(--transition)}
 .container{width:100%;max-width:1200px;margin:0 auto;padding:0 1.5rem}
-.header{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(255,255,255,.95);backdrop-filter:blur(10px);box-shadow:0 1px 2px rgba(0,0,0,.05)}
+.header{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(255,255,255,.97);box-shadow:0 1px 2px rgba(0,0,0,.05)}
+@supports (backdrop-filter:blur(10px)){.header{backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);background:rgba(255,255,255,.92)}}
+@supports not (backdrop-filter:blur(10px)){.header{background:rgba(255,255,255,.99)}}
 .header-inner{display:flex;align-items:center;justify-content:space-between;height:80px}
+@media(max-width:768px){.product-hero-grid{grid-template-columns:1fr}.specs-grid{grid-template-columns:1fr}.apps-grid{grid-template-columns:repeat(2,1fr)}.related-grid{grid-template-columns:1fr}.breadcrumb{padding-top:84px}}
+@media(max-width:480px){.product-title{font-size:1.75rem}.product-actions{flex-direction:column}.product-actions .btn{width:100%}.apps-grid{grid-template-columns:1fr}}
 .logo{display:flex;align-items:center;gap:1rem}
 .logo-icon{width:48px;height:48px;color:var(--primary)}
 .logo-name{font-size:1.25rem;font-weight:700;color:var(--primary)}
@@ -35,7 +39,8 @@ a{text-decoration:none;color:inherit;transition:var(--transition)}
 .breadcrumb-current{color:var(--primary);font-weight:600}
 .product-hero{padding:4rem 0;background:var(--white)}
 .product-hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start}
-.gallery-main{width:100%;aspect-ratio:1;background:linear-gradient(135deg,var(--gray-200),var(--gray-300));border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:1rem;position:relative}
+.gallery-main{width:100%;aspect-ratio:1;background:linear-gradient(135deg,var(--gray-200),var(--gray-300));border-radius:12px;display:flex;align-items:center;justify-content:center;overflow:hidden;margin-bottom:1rem;position:relative}
+@supports not (aspect-ratio:1){.gallery-main{height:0;padding-bottom:100%}.gallery-main>*{position:absolute;top:20%;left:20%;width:60%;height:60%}}
 .gallery-main svg{width:60%;height:60%;color:var(--gray-500)}
 .gallery-badge{position:absolute;top:1rem;left:1rem;background:linear-gradient(135deg,#2c5282,#1a365d);color:var(--white);padding:.25rem .75rem;border-radius:4px;font-size:.75rem;font-weight:700}
 .gallery-thumbs{display:flex;gap:.75rem}
